@@ -135,6 +135,122 @@ cat frontend/src/App.js
 cat frontend/src/pages/Home.js
 cat frontend/src/pages/Tickets.js
 
+2. Fix the React API URLs
+
+
+3. Create the backend Dockerfiles
+   frontend/src/pages/Tickets.js.
+   Create the backend Dockerfiles
+   Create backend/dev/Dockerfile
+   Create backend/prod/Dockerfile
+
+4. Create the frontend Dockerfile
+Create frontend/Dockerfile
+Create frontend/nginx.conf:
+
+
+ . MangoDB:
+
+ Step 1 — Create a new MongoDB Atlas project
+
+ <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4adf0872-4838-4672-94bd-18766d89a3cb" /> 
+
+ 
+ Step 2 — creating your MongoDB cluster
+
+Step 3 — Choose Drivers and Client Libraries
+Select Python as the driver.
+- Language: Python
+- Client Library: PyMongo (Synchronous)
+Choose the recommended version if asked.
+
+Copy the connection string
+1. Find the Copy button beside the connection string.
+2. Click it.
+3. Paste it temporarily into Notepad on your computer.
+4. Replace the username and password placeholders with your actual database user credentials.
+
+Step 1 — Copy your connection string
+
+Step 2 — Prepare two database URLs
+
+We'll use the same cluster but separate databases.
+
+Your development connection string should end with:
+mongodb+srv://USERNAME:PASSWORD@YOUR_CLUSTER.mongodb.net/multienv_dev?retryWrites=true&w=majority
+Your production connection string should end with:
+mongodb+srv://USERNAME:PASSWORD@YOUR_CLUSTER.mongodb.net/multienv_prod?retryWrites=true&w=majority
+
+
+Step 4 — Allow your EC2 server
+This is important. Your EC2 server must be authorized separately.
+1. In Atlas, open Security → Network Access.
+2. Click Add IP Address : 54.210.207.235/32
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/31dfbc1b-58d1-4945-8806-4ba19c34fa88" /> 
+
+In the Comment field, enter:
+MultienvApp-EC2
+
+Step 2 — Temporary access setting
+You can leave this switch OFF.
+
+That means the IP access entry won't automatically expire after six hours.
+
+Step 3 — Confirm
+Click the green Confirm button.
+
+Step 4 — Verify database user
+After confirming the IP:
+1. Click Database Users in the left menu.
+2. Check whether you already have a database user.
+
+Step 1 — Create an application database user
+Click + ADD NEW DATABASE USER at the top right.
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/69572a19-b472-4079-9c50-43db334cc937" />
+
+
+   <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/62a85c57-718d-4483-91f1-58b4e1307c38" />
+
+
+Step 1 — Assign the database role
+In your second screenshot, the Built-in Role section shows 0 SELECTED.
+1. Scroll slightly up in the user creation window.
+2. Find Built-in Role.
+3. Click Add Built In Role.
+4. Open the role dropdown.
+5. Select:
+Select this role
+Read and write to any database
+
+Step 2 — Keep the other settings unchanged
+- Custom Roles: Leave unchanged.
+- Specific Privileges: Leave unchanged.
+- Restrict Access to Specific Clusters: OFF.
+- Temporary User: OFF.
+
+  Step 3 — Create the user
+Scroll to the bottom and click the green Add User button.
+
+Configure MongoDB on your EC2 server
+Step 1 — Get the connection string
+1. Open Database → Clusters.
+2. Find MultienvCluster.
+3. Click Connect.
+4. Select Drivers.
+5. Choose Python and PyMongo.
+6. Copy the connection string.
+
+   Prepare the two database URLs
+We'll use separate databases:
+- multienv_dev
+- multienv_prod
+
+  Step 3 — Create the environment file on EC2
+Return to your Ubuntu SSH terminal and run:
+
+
 
 
 
