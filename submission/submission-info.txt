@@ -1,0 +1,15 @@
+Student Name: Sandhyashree palle
+Repository URL: https://github.com/Sandhyashree1812/MultienvApp
+
+Deployment Status: Successfully deployed on AWS EC2.
+Frontend, Development Backend, and Production Backend containers are running.
+
+Access URLs:
+Frontend: http://3.89.62.29:3000
+Development: http://3.89.62.29:3000/dev
+Production: http://3.89.62.29:3000/prod
+
+Development API: http://3.89.62.29:3000/api/dev/tickets
+Production API: http://3.89.62.29:3000/api/prod/tickets
+
+Submission Date: 15-11-2026
