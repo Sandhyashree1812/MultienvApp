@@ -22,25 +22,38 @@ The React frontend communicates with both Flask backends through Nginx reverse p
 
 ## Project Structure
 
-```
-multienv/
- docker-compose.yml
- backend/
-dev/
-app.py
-requirements.txt
-Dockerfile
- .env
- prod/
-    app.py
-    requirements.txt
-    Dockerfile
-    .env
- frontend/
-     app.py
-     requirements.txt
-     Dockerfile
-     .env
+## Project Structure
+
+```text
+MultienvApp/
+|
++-- backend/
+|   +-- dev/
+|   |   +-- app.py
+|   |   +-- requirements.txt
+|   |   +-- Dockerfile
+|   |
+|   +-- prod/
+|       +-- app.py
+|       +-- requirements.txt
+|       +-- Dockerfile
+|
++-- frontend/
+|   +-- public/
+|   +-- src/
+|   +-- package.json
+|   +-- nginx.conf
+|   +-- Dockerfile
+|
++-- Screenshots/
+|
++-- submission/
+|   +-- submission-info.txt
+|
++-- .env.example
++-- .gitignore
++-- docker-compose.yml
++-- README.md
 ```
 
 
