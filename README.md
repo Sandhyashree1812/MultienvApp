@@ -33,6 +33,9 @@ Step 1. Launch an EC2 instance
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/080689e6-9dc9-4e76-8580-7f0c5bd9e9fb" />
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1becc349-ebc7-4f32-b8e8-bf579094d827" />
+Security Group and inbound rules:
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1fc75b93-f159-49ae-8fc2-948e557a81b8" />
 
 Phase 2 – Connect to EC2 using SSH
 
