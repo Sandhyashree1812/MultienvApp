@@ -408,6 +408,9 @@ Open the file:
 both app.py files in backend -> dev for prod and dev, and update the details.
 
 
+<img width="644" height="166" alt="image" src="https://github.com/user-attachments/assets/92140131-310e-4925-81ae-250f8748b24f" />
+
+
 
 
 
