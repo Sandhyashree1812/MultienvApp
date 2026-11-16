@@ -12,7 +12,7 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-app.config['MONGO_URI'] = os.getenv('MONGO_URI')
+app.config['MONGO_URI'] = os.getenv('PROD_MONGO_URI')
 
 # Initialize MongoDB client
 mongo = PyMongo(app)
@@ -63,4 +63,4 @@ def get_tickets():
     return jsonify({"tasks": todos, "environment": "Production"})
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=3002 , debug=True)
+    app.run(host="0.0.0.0", port=3002 , debug=False)

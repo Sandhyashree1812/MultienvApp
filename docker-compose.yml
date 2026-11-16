@@ -1,0 +1,41 @@
+services:
+  dev-backend:
+    build:
+      context: ./backend/dev
+    container_name: multienv-dev
+    environment:
+      DEV_MONGO_URI: ${DEV_MONGO_URI}
+    expose:
+      - "3001"
+    restart: unless-stopped
+    networks:
+      - multienv-network
+
+  prod-backend:
+    build:
+      context: ./backend/prod
+    container_name: multienv-prod
+    environment:
+      PROD_MONGO_URI: ${PROD_MONGO_URI}
+    expose:
+      - "3002"
+    restart: unless-stopped
+    networks:
+      - multienv-network
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: multienv-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - dev-backend
+      - prod-backend
+    restart: unless-stopped
+    networks:
+      - multienv-network
+
+networks:
+  multienv-network:
+    driver: bridge

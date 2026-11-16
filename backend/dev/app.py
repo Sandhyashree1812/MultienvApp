@@ -12,7 +12,7 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)  
 # Use MONGO_URI from the .env file
-app.config['MONGO_URI'] = os.getenv('MONGO_URI')
+app.config['MONGO_URI'] = os.getenv('DEV_MONGO_URI')
 
 # Initialize MongoDB client
 mongo = PyMongo(app)
