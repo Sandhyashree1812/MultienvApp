@@ -248,11 +248,156 @@ We'll use separate databases:
 - multienv_prod
 
   Step 3 — Create the environment file on EC2
-Return to your Ubuntu SSH terminal and run:
+Return to your Ubuntu SSH terminal and run:  nano .env
+
+add the below code, replacing the password:
+DEV_MONGO_URI="mongodb+srv://multienv_app_user:YOUR_PASSWORD@multienvcluster.hvhhe6t.mongodb.net/multienv_dev?retryWrites=true&w=majority"
+
+PROD_MONGO_URI="mongodb+srv://multienv_app_user:YOUR_PASSWORD@multienvcluster.hvhhe6t.mongodb.net/multienv_prod?retryWrites=true&w=majority"
+
+save: Cntrl+O
+file name prompt is shown as .env: press enter
+exit: Cntrl +X
+
+
+Phase 2 — Fix the application configuration
+
+
+Step 2.1 — Update the development backend
+Run this in your EC2 terminal:
+sed -i "s/os.getenv('MONGO_URI')/os.getenv('DEV_MONGO_URI')/" backend/dev/app.py
+
+Step 2.2 — Update the production backend
+sed -i "s/os.getenv('MONGO_URI')/os.getenv('PROD_MONGO_URI')/" backend/prod/app.py
+
+
+Also disable Flask debug mode in production:
+sed -i 's/debug=True/debug=False/' backend/prod/app.py
+
+Step 2.3 — Fix the React API URLs
+Replace frontend/src/pages/Tickets.js with:
+
+Phase 3 — Create the three Dockerfiles
+Step 3.1 — Development backend Dockerfile
+Step 3.2 — Production backend Dockerfile
+Step 3.3 — Frontend Dockerfile
+Step 3.4 — Create Nginx configuration
+
+Phase 4 — Create Docker Compose
+Create the file in your project root
+
+Phase 5 — Validate configuration
+Before building, run:
+git status --short
+docker compose config --quiet
+grep -n "MONGO_URI" backend/dev/app.py backend/prod/app.py
+
+Check that frontend no longer uses localhost:
+grep -n "apiUrl" frontend/src/pages/Tickets.js
+
+Phase 6 — Build and deploy
+Run: docker compose up -d --build
+docker compose ps
+docker compose logs --tail=40
+
+Step 1 — Create the development Dockerfile
+Run this command in your EC2 Ubuntu terminal:
+
+Step 2 — Verify all three Dockerfiles
+Run:
+ls -l backend/dev/Dockerfile
+ls -l backend/prod/Dockerfile
+ls -l frontend/Dockerfile
+
+Step 3 — Verify the frontend configuration
+ls -l frontend/nginx.conf
+
+Step 4 — Build again
+docker compose up -d --build
+
+Step 5 — Check containers
+If the build succeeds:
+docker compose ps
+docker compose logs --tail=30
+
+Step 6 — Test the frontend from EC2
+curl -I http://localhost:3000
+
+
+
+Step 1 — Check container status
+In your EC2 Ubuntu terminal, run:
+docker compose ps
+
+<img width="884" height="146" alt="image" src="https://github.com/user-attachments/assets/74fce211-3db6-4bf0-95df-db3b8807e3e0" />
 
 
 
 
+Step 2 — Test the frontend from EC2
+curl -I http://localhost:3000
+
+<img width="559" height="171" alt="image" src="https://github.com/user-attachments/assets/af2258e6-83ed-4402-9adc-d277661a1d15" />
+
+
+Step 3 — Test the application in your browser
+Open these URLs:
+Application	URL
+Home	http://23.22.159.171:3000
+Development	http://23.22.159.171:3000/dev
+Production	http://23.22.159.171:3000/prod
+
+
+Home	http://23.22.159.171:3000
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1a7126d8-7fe8-42ad-8ce4-f165bbb0b8f0" />
+
+
+
+Development	http://23.22.159.171:3000/dev:
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/18e0e9e8-ebf2-4cb2-8384-3912a7b95d48" />
+
+
+Production	http://23.22.159.171:3000/prod
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/71235aab-8186-494f-83d2-803ace0f1392" />
+
+
+Step 3 — Test database connectivity
+Run:
+docker compose logs --tail=50 dev-backend prod-backend
+
+
+Step 1 — Check the backend errors
+Go to your EC2 Ubuntu terminal and run:
+docker compose logs --tail=50 dev-backend prod-backend
+
+Step 1 — Test the production API
+Run this in your EC2 terminal:
+curl -i http://localhost:3000/api/prod/tickets
+
+<img width="689" height="250" alt="image" src="https://github.com/user-attachments/assets/f2ea971f-0816-4c7a-8e87-10d53c8a23ec" />
+
+
+
+
+Step 2 — Refresh both browser pages
+Open or refresh:
+- Development environment
+- Production environment
+
+
+  
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/248b5bbe-b385-4c0a-a450-c2d64229f7e5" />
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4214b998-aeb2-48ac-a589-828bb54cb4e6" />
+
+
+
+Step 3 — Test ticket creation
+Try adding one test ticket in Development and another in Production. Refresh each page and verify the tickets remain.
 
 
 
