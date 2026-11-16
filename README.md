@@ -24,23 +24,23 @@ The React frontend communicates with both Flask backends through Nginx reverse p
 
 ```
 multienv/
-â”œâ”€â”€ docker-compose.yml
-â”œâ”€â”€ backend/
-â”‚   â”œâ”€â”€ dev/
-â”‚   â”‚   â”œâ”€â”€ app.py
-â”‚   â”‚   â”œâ”€â”€ requirements.txt
-â”‚   â”‚   â”œâ”€â”€ Dockerfile
-â”‚   â”‚   â””â”€â”€ .env
-â”‚   â””â”€â”€ prod/
-â”‚       â”œâ”€â”€ app.py
-â”‚       â”œâ”€â”€ requirements.txt
-â”‚       â”œâ”€â”€ Dockerfile
-â”‚       â””â”€â”€ .env
-â””â”€â”€ frontend/
-    â”œâ”€â”€ app.py
-    â”œâ”€â”€ requirements.txt
-    â”œâ”€â”€ Dockerfile
-    â””â”€â”€ .env
+ docker-compose.yml
+ backend/
+dev/
+app.py
+requirements.txt
+Dockerfile
+ .env
+ prod/
+    app.py
+    requirements.txt
+    Dockerfile
+    .env
+ frontend/
+     app.py
+     requirements.txt
+     Dockerfile
+     .env
 ```
 
 
