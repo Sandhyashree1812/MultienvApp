@@ -57,7 +57,7 @@ MultienvApp/
 ```
 
 
-Phase 1 â€“ AWS EC2 infrastructure setup
+Phase 1 AWS EC2 infrastructure setup
 
 Step 1. Launch an EC2 instance
 
@@ -68,7 +68,7 @@ Security Group and inbound rules:
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1fc75b93-f159-49ae-8fc2-948e557a81b8" />
 
-Phase 2 â€“ Connect to EC2 using SSH
+Phase 2 Connect to EC2 using SSH
 
 Run: ssh -i "$env:USERPROFILE\Downloads\multienv-key.pem" ubuntu@3.89.62.29
 
@@ -79,7 +79,7 @@ Run: ssh -i "$env:USERPROFILE\Downloads\multienv-key.pem" ubuntu@3.89.62.29
 <img width="755" height="241" alt="image" src="https://github.com/user-attachments/assets/747ee5f1-8bb1-4916-ac50-819f11283d3f" />
 
 
-Phase 3 â€“ Verify server resources
+Phase 3 Verify server resources
 
 1. Verify username
    Run: whoami
@@ -106,7 +106,7 @@ Run: lsb_release -a
 
    <img width="579" height="172" alt="image" src="https://github.com/user-attachments/assets/9d0faedb-c41c-4943-98b4-d97f6ce3d1ae" />
 
-Phase 2 â€“ Install Docker and Docker Compose
+Phase 2 Install Docker and Docker Compose
 
 Step 1. Update Ubuntu
 Run: sudo apt update
@@ -137,22 +137,32 @@ docker --version
 Step 5. Verify Docker Compose
 docker compose version
 
-Step 1 â€” Clone the repository
+<img width="404" height="117" alt="image" src="https://github.com/user-attachments/assets/6d060b8d-9cec-472f-b9bb-15c8293e7409" />
+
+Step 1 Clone the repository
 git clone https://github.com/Sandhyashree1812/MultienvApp.git
 
-Step 2 â€” Enter the project directory
+Step 2 Enter the project directory
 cd MultienvApp
 
 <img width="622" height="290" alt="image" src="https://github.com/user-attachments/assets/266baf07-4dc7-4fad-b577-03a2d2f6f597" />
 
 
-Step 3 â€” Inspect the project structure
-ls -la
-find . -maxdepth 4 -type f | sort
+Step 3 Inspect the project structure
+Run: ls -la
 
-Step 4 â€” Check available memory and disk space
+<img width="393" height="229" alt="image" src="https://github.com/user-attachments/assets/fddde056-f1ea-4fea-aabf-b445783b49d6" />
+
+
+
+Run: find . -maxdepth 4 -type f | sort
+
+Step 4 Check available memory and disk space
 free -h
-df -h / 
+df -h /  
+
+<img width="398" height="427" alt="image" src="https://github.com/user-attachments/assets/e1ef1a49-05e0-4f05-9bc7-b03d2966fcd1" />
+
 
 4. Inspect the backend and frontend files
 cat backend/dev/app.py
@@ -169,8 +179,15 @@ cat frontend/src/App.js
 cat frontend/src/pages/Home.js
 cat frontend/src/pages/Tickets.js
 
-2. Fix the React API URLs
+2. Fix the React API URLs:
+   The code used in frontend/src/pages/Tickets.js. is as below, this makes the browser send API requests through Nginx:
+   
+   const apiUrl =
+  env === "dev"
+    ? "/api/dev/tickets"
+    : "/api/prod/tickets";
 
+--------------------------------------------- 
 
 3. Create the backend Dockerfiles
    frontend/src/pages/Tickets.js.
@@ -182,17 +199,16 @@ cat frontend/src/pages/Tickets.js
 Create frontend/Dockerfile
 Create frontend/nginx.conf:
 
+. MongoDB Atlas connection strings
 
- . MangoDB:
-
- Step 1 â€” Create a new MongoDB Atlas project
+ Step 1 Create a new MongoDB Atlas project
 
  <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4adf0872-4838-4672-94bd-18766d89a3cb" /> 
 
  
- Step 2 â€” creating your MongoDB cluster
+ Step 2 creating your MongoDB cluster
 
-Step 3 â€” Choose Drivers and Client Libraries
+Step 3 Choose Drivers and Client Libraries
 Select Python as the driver.
 - Language: Python
 - Client Library: PyMongo (Synchronous)
@@ -204,7 +220,7 @@ Copy the connection string
 3. Paste it temporarily into Notepad on your computer.
 4. Replace the username and password placeholders with your actual database user credentials.
 
-Step 1 â€” Copy your connection string
+Step 1 Copy your connection string
 
 Step 2 â€” Prepare two database URLs
 
@@ -214,6 +230,8 @@ Your development connection string should end with:
 mongodb+srv://USERNAME:PASSWORD@YOUR_CLUSTER.mongodb.net/multienv_dev?retryWrites=true&w=majority
 Your production connection string should end with:
 mongodb+srv://USERNAME:PASSWORD@YOUR_CLUSTER.mongodb.net/multienv_prod?retryWrites=true&w=majority
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/69f436b7-f163-4604-9682-d7dd9825458f" />
 
 
 Step 4 â€” Allow your EC2 server
@@ -231,6 +249,9 @@ You can leave this switch OFF.
 
 That means the IP access entry won't automatically expire after six hours.
 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/3b26c229-aa68-482c-b836-0cae18131ba2" />
+
+
 Step 3 â€” Confirm
 Click the green Confirm button.
 
@@ -239,23 +260,27 @@ After confirming the IP:
 1. Click Database Users in the left menu.
 2. Check whether you already have a database user.
 
+   <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/20c6c340-156e-4030-a1ac-b8bae7b38d73" />
+
+   <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/34398dcc-b741-456d-b186-833893d26250" />
+
+
+
 Step 1 â€” Create an application database user
 Click + ADD NEW DATABASE USER at the top right.
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/69572a19-b472-4079-9c50-43db334cc937" />
 
 
-   <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/62a85c57-718d-4483-91f1-58b4e1307c38" />
 
 
 Step 1 â€” Assign the database role
-In your second screenshot, the Built-in Role section shows 0 SELECTED.
 1. Scroll slightly up in the user creation window.
 2. Find Built-in Role.
 3. Click Add Built In Role.
 4. Open the role dropdown.
 5. Select:
-Select this role
+Select this role: 
 Read and write to any database
 
 Step 2 â€” Keep the other settings unchanged
@@ -267,6 +292,14 @@ Step 2 â€” Keep the other settings unchanged
   Step 3 â€” Create the user
 Scroll to the bottom and click the green Add User button.
 
+   <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/62a85c57-718d-4483-91f1-58b4e1307c38" />
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/6d40f0d0-4fac-4013-8213-3a23fbf28104" />
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b1680a0a-f579-499b-9588-3744736728c8" />
+
+
 Configure MongoDB on your EC2 server
 Step 1 â€” Get the connection string
 1. Open Database â†’ Clusters.
@@ -276,12 +309,48 @@ Step 1 â€” Get the connection string
 5. Choose Python and PyMongo.
 6. Copy the connection string.
 
+7. <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/0c5c7487-ed2c-4234-b9e3-a79a18f3a5cf" />
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/138b1e4e-f800-457a-aa8c-27cdb7e1af87" /> 
+
+------------------------ 
+
+Note: As the EC2 instance got stopped again the Public IPv4 address changed, so used the new one from here:
+Updated MongoDB Atlas also with the chnaged IP address
+Checked on Docker
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/37b70f69-34da-439c-a88b-f786dee3ed89" /> 
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/eab08ffc-8704-4159-963b-16364e17de59" />
+
+<img width="357" height="42" alt="image" src="https://github.com/user-attachments/assets/1e93dac2-e602-4130-9d2c-4bc8d5cd3308" />
+
+<img width="328" height="36" alt="image" src="https://github.com/user-attachments/assets/08a3323e-cf45-4d3a-a436-1180958fa203" /> 
+
+<img width="311" height="427" alt="image" src="https://github.com/user-attachments/assets/7e036084-77b9-4d3a-886c-75a431a9db25" />
+
+
+
+EC2 instance has again restarted and its new public IP address is:
+3.89.62.29
+Previous IP: 23.22.159.171 · New IP: 3.89.62.29 
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/caecb981-598d-4bb1-904d-b40245a3b037" /> 
+
+Updated the EC2 security group:
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2a0355f6-6e8a-43cb-a50c-710e0c6c9f05" />
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/49b0aa5e-786b-442e-9835-3a4d511cbfae" />
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/91aff556-c347-4f4b-bed9-081804aaa17e" />
+
+----------------------------------- 
+
    Prepare the two database URLs
 We'll use separate databases:
 - multienv_dev
 - multienv_prod
 
-  Step 3 â€” Create the environment file on EC2
+  Step 3 Create the environment file on EC2
 Return to your Ubuntu SSH terminal and run:  nano .env
 
 add the below code, replacing the password:
@@ -293,11 +362,15 @@ save: Cntrl+O
 file name prompt is shown as .env: press enter
 exit: Cntrl +X
 
+<img width="323" height="138" alt="image" src="https://github.com/user-attachments/assets/c6b72698-2ad2-45f3-b2b9-bef5a54dbbe3" />
+
+<img width="325" height="334" alt="image" src="https://github.com/user-attachments/assets/27662313-c6f0-45d7-b1aa-a31c1ce132bd" />
+
 
 Phase 2 â€” Fix the application configuration
 
 
-Step 2.1 â€” Update the development backend
+Step 2.1 Update the development backend
 Run this in your EC2 terminal:
 sed -i "s/os.getenv('MONGO_URI')/os.getenv('DEV_MONGO_URI')/" backend/dev/app.py
 
@@ -309,22 +382,48 @@ Also disable Flask debug mode in production:
 sed -i 's/debug=True/debug=False/' backend/prod/app.py
 
 Step 2.3 â€” Fix the React API URLs
-Replace frontend/src/pages/Tickets.js with:
+Replace frontend/src/pages/Tickets.js 
 
-Phase 3 â€” Create the three Dockerfiles
-Step 3.1 â€” Development backend Dockerfile
-Step 3.2 â€” Production backend Dockerfile
-Step 3.3 â€” Frontend Dockerfile
-Step 3.4 â€” Create Nginx configuration
+Phase 3 Create the three Dockerfiles
+Step 3.1  Development backend Dockerfile
+Step 3.2  Production backend Dockerfile
+Step 3.3  Frontend Dockerfile
+Step 3.4  Create Nginx configuration 
+
+<img width="395" height="470" alt="image" src="https://github.com/user-attachments/assets/4ddfcbf0-8f38-4d6b-89f8-1de2bcbc62db" />
+
+<img width="373" height="308" alt="image" src="https://github.com/user-attachments/assets/1c82b397-adf6-43dd-a65e-02c8f386012b" />
 
 Phase 4 â€” Create Docker Compose
-Create the file in your project root
+Create the file in your project root 
+
+<img width="391" height="451" alt="image" src="https://github.com/user-attachments/assets/94ae561d-2028-4289-bd2e-bd8ce43e3448" />
+
+<img width="385" height="349" alt="image" src="https://github.com/user-attachments/assets/c3cc93b2-e2b2-429a-82c8-21ed96d9c351" />
+
+<img width="324" height="452" alt="image" src="https://github.com/user-attachments/assets/77df85da-cf6d-4751-ae83-92469decde05" />
+
+<img width="316" height="394" alt="image" src="https://github.com/user-attachments/assets/280fc305-1ba8-494f-9c3c-460efbb87e6b" />
+
+<img width="327" height="417" alt="image" src="https://github.com/user-attachments/assets/c25a4dce-74aa-41cc-a723-1e3debe86155" />
+
+
+<img width="332" height="295" alt="image" src="https://github.com/user-attachments/assets/63411020-ff4b-4a85-a296-4495e7923ad1" />
+
+<img width="321" height="294" alt="image" src="https://github.com/user-attachments/assets/c2c392e8-9cfe-4d3f-afbc-ada0c78d9a91" />
+
+<img width="563" height="183" alt="image" src="https://github.com/user-attachments/assets/81faf51f-e559-4436-9ca0-bc1bcbf94677" />
+
 
 Phase 5 â€” Validate configuration
 Before building, run:
 git status --short
 docker compose config --quiet
-grep -n "MONGO_URI" backend/dev/app.py backend/prod/app.py
+grep -n "MONGO_URI" backend/dev/app.py backend/prod/app.py 
+
+<img width="319" height="410" alt="image" src="https://github.com/user-attachments/assets/f9a767a1-4f2b-4fad-b46d-8a2092e5a827" />
+
+<img width="330" height="361" alt="image" src="https://github.com/user-attachments/assets/0ab9f246-050f-4295-a744-4c3569e02997" />
 
 Check that frontend no longer uses localhost:
 grep -n "apiUrl" frontend/src/pages/Tickets.js
@@ -334,6 +433,16 @@ Run: docker compose up -d --build
 docker compose ps
 docker compose logs --tail=40
 
+<img width="343" height="347" alt="image" src="https://github.com/user-attachments/assets/14f1a38a-32a3-4d75-aa43-5058d0b89e9a" />
+
+<img width="310" height="408" alt="image" src="https://github.com/user-attachments/assets/9c45eb8f-8eef-4f00-9efb-b9b7362a45eb" /> 
+
+<img width="317" height="150" alt="image" src="https://github.com/user-attachments/assets/4cafc241-a61d-4fc4-b79c-a212d7aed05d" /> 
+
+<img width="403" height="537" alt="image" src="https://github.com/user-attachments/assets/48fa4685-3def-4ac8-a35e-68c9a80e7cd2" />
+
+
+
 Step 1 â€” Create the development Dockerfile
 Run this command in your EC2 Ubuntu terminal:
 
@@ -341,7 +450,10 @@ Step 2 â€” Verify all three Dockerfiles
 Run:
 ls -l backend/dev/Dockerfile
 ls -l backend/prod/Dockerfile
-ls -l frontend/Dockerfile
+ls -l frontend/Dockerfile 
+
+<img width="390" height="273" alt="image" src="https://github.com/user-attachments/assets/c581790a-bf34-4b5b-bf07-0b5428e5c8bd" />
+
 
 Step 3 â€” Verify the frontend configuration
 ls -l frontend/nginx.conf
@@ -352,10 +464,23 @@ docker compose up -d --build
 Step 5 â€” Check containers
 If the build succeeds:
 docker compose ps
-docker compose logs --tail=30
+docker compose logs --tail=30 
+
+<img width="318" height="447" alt="image" src="https://github.com/user-attachments/assets/a0801588-d095-454a-8e51-a977ffbdaffd" />
+
+<img width="311" height="408" alt="image" src="https://github.com/user-attachments/assets/e4f6d893-b550-4f92-b2fd-72f77487d33f" />
+
+<img width="329" height="275" alt="image" src="https://github.com/user-attachments/assets/34f9051c-1c2f-417d-b998-e0aa973ccf06" /> 
+
+<img width="539" height="164" alt="image" src="https://github.com/user-attachments/assets/bf777156-ec58-487b-8f52-36fdf240a999" />
+
+
+
 
 Step 6 â€” Test the frontend from EC2
 curl -I http://localhost:3000
+
+<img width="374" height="240" alt="image" src="https://github.com/user-attachments/assets/78510dcb-6e08-4590-bf7d-1a4568757355" />
 
 
 
@@ -373,6 +498,11 @@ curl -I http://localhost:3000
 
 <img width="559" height="171" alt="image" src="https://github.com/user-attachments/assets/af2258e6-83ed-4402-9adc-d277661a1d15" />
 
+<img width="382" height="455" alt="image" src="https://github.com/user-attachments/assets/94808596-6918-4482-a116-65099e8da68e" />
+
+<img width="389" height="301" alt="image" src="https://github.com/user-attachments/assets/a0ba95cc-0ac7-4c28-a22b-139a409e8b91" />
+
+<img width="335" height="233" alt="image" src="https://github.com/user-attachments/assets/559d2f62-d6b1-45a3-b80f-1df3ccf91b8a" />
 
 Step 3 â€” Test the application in your browser
 Open these URLs:
@@ -382,18 +512,18 @@ Development	http://3.89.62.29:3000/dev
 Production	http://3.89.62.29:3000/prod
 
 
-Home	http://3.89.62.29:3000
+1. Home	http://3.89.62.29:3000 :
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1a7126d8-7fe8-42ad-8ce4-f165bbb0b8f0" />
 
 
 
-Development	http://3.89.62.29:3000/dev:
+2. Development	http://3.89.62.29:3000/dev:
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/18e0e9e8-ebf2-4cb2-8384-3912a7b95d48" />
 
 
-Production	http://3.89.62.29:3000/prod
+3. Production	http://3.89.62.29:3000/prod:
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/71235aab-8186-494f-83d2-803ace0f1392" />
 
@@ -402,10 +532,8 @@ Step 3 â€” Test database connectivity
 Run:
 docker compose logs --tail=50 dev-backend prod-backend
 
+<img width="383" height="519" alt="image" src="https://github.com/user-attachments/assets/12aab861-8fa3-4e03-b95e-9c78a78e06bc" />
 
-Step 1 â€” Check the backend errors
-Go to your EC2 Ubuntu terminal and run:
-docker compose logs --tail=50 dev-backend prod-backend
 
 Step 1 â€” Test the production API
 Run this in your EC2 terminal:
@@ -427,11 +555,6 @@ Open or refresh:
 
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4214b998-aeb2-48ac-a589-828bb54cb4e6" />
-
-
-
-Step 3 â€” Test ticket creation
-Try adding one test ticket in Development and another in Production. Refresh each page and verify the tickets remain.
 
 
 
